@@ -1,0 +1,105 @@
+{
+  "assessments": [
+    {
+      "id": "1",
+      "cid": "1",
+      "title": "Assessment 1",
+      "testurl": "https://AssesssmentQA.com/assessment1-qa",
+      "creationdate": "2023-08-07",
+      "expirydate": "2023-08-15",
+      "evaluation": "Very Good",
+      "remark": "Impressive!"
+    }
+  ],
+  "applicants": [
+    {
+      "id": "1",
+      "name": "Sushil Karki",
+      "email": "karkisushil309@gmail.com",
+      "phone": "9810578044",
+      "technology": "ReactJs",
+      "reference": "pdf",
+      "level": "Mid",
+      "salary": "30k",
+      "experience": "7 month"
+    },
+    {
+      "id": "2",
+      "name": "Hari Gautam ",
+      "email": "HariGauatam@gmail.com",
+      "phone": "9810571355",
+      "technology": "NodeJS",
+      "reference": "Website",
+      "level": "Junior",
+      "salary": "35k",
+      "experience": "1 Year"
+    },
+    {
+      "id": "3",
+      "name": "ujjwal Gautam ",
+      "email": "GautamUjjwal22@gmail.com",
+      "phone": "9742045751",
+      "technology": "Dot Net",
+      "reference": "Website",
+      "level": "Mid",
+      "salary": "40k",
+      "experience": "1 Year"
+    },
+    {
+      "id": "4",
+      "name": "Laxmi Shrestha ",
+      "email": "ShresthaLaxmi@gmail.com",
+      "phone": "9853991355",
+      "technology": "QA",
+      "reference": "pdf",
+      "level": "Mid",
+      "salary": "40k",
+      "experience": "1 Year"
+    },
+    {
+      "id": "5",
+      "name": "Subash Badiya ",
+      "email": "Subash11@gmail.com",
+      "phone": "9813455012",
+      "technology": "HR",
+      "reference": "Website",
+      "level": "Sunior",
+      "salary": "50k",
+      "experience": "3 Year"
+    },
+    {
+      "id": "6",
+      "name": "Avishake Dahal ",
+      "email": "Avida111@gmail.com",
+      "phone": "9813554412",
+      "technology": "Dot Net",
+      "reference": "pdf",
+      "level": "junior",
+      "salary": "20k",
+      "experience": "7 Month"
+    },
+    {
+      "id": "7",
+      "name": "Sauwan Thapa ",
+      "email": "ThapaSauwan53@gmail.com",
+      "phone": "9857875112",
+      "technology": "Java",
+      "reference": "Website",
+      "level": "junior",
+      "salary": "20k",
+      "experience": "7 Month"
+    },
+    {
+      "id": "8",
+      "name": "Priyansu Kharel ",
+      "email": "PriyansuKharel1@gmail.com",
+      "phone": "9819589551",
+      "technology": "NodeJS",
+      "reference": "pdf",
+      "level": "Mid",
+      "salary": "30k",
+      "experience": "1 Year"
+    }
+
+  ]
+}
