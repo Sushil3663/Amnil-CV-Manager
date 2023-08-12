@@ -100,6 +100,37 @@
       "salary": "30k",
       "experience": "1 Year"
     }
-
+  ],
+  "jobApplicationStatus": [
+    {
+      "id": 1,
+      "Name": "Sushil Karki",
+      "Applied": "Yes",
+      "InterviewScheduled": "Yes",
+      "Accepted": "Yes",
+      "Await": "Parked",
+      "status": "Hired",
+      "OfferLetter": "Sent"
+    },
+    {
+      "id": 2,
+      "Name": "Ujjwal Gautam",
+      "Applied": "Yes",
+      "InterviewScheduled": "Yes",
+      "Accepted": "Yes",
+      "Await": "Parked",
+      "status": "Hired",
+      "OfferLetter": "Sent"
+    },
+    {
+      "id": 3,
+      "Name": "Pujan Rai",
+      "Applied": "Yes",
+      "InterviewScheduled": "No",
+      "Accepted": "No",
+      "Await": "Blocked",
+      "status": "Black Listed",
+      "OfferLetter": "Not Sent"
+    }
   ]
 }

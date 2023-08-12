@@ -1,10 +1,9 @@
-
-import React, { useState } from "react";
+import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
+import { formatDate } from "./FormateDate";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { formatDate } from "./FormateDate";
 import listPlugin from "@fullcalendar/list";
 import {
   Box,
@@ -23,39 +22,42 @@ const Calendar = () => {
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
   const unique_id = uuid();
+
   const interviewTypes = [
     "HRAssessment",
     "TechnicalAssessment",
     "NegotiationRound",
   ];
 
+
   const handleDateClick = (selected) => {
-    const title = prompt("Please enter an event name");
+    const title = prompt("Please enter a event name");
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
 
     if (title) {
-      const interviewerName = window.prompt("Please enter the interviewer's name:");
-      const interviewerEmail = window.prompt("Please enter the interviewer's email:");
+      // const interviewType = prompt("Please enter the interview type (HRAssessment/TechnicalAssessment/NegotiationRound):");
 
-      const newEventData = {
-        id: unique_id,
+
+      const interviewerName = prompt("Please enter the interviewer's name:");
+      const interviewerEmail = prompt("Please enter the interviewer's email:");
+
+      calendarApi.addEvent({
+        id: {unique_id},
         title,
         start: selected.startStr,
         end: selected.endStr,
         allDay: selected.allDay,
-        interviewType: "",
         interviewerName,
         interviewerEmail,
-      };
+      });
+      const interviewType = prompt("Please enter the interview type (HRAssessment/TechnicalAssessment/NegotiationRound):");
 
-      const interviewType = window.prompt("Please enter the interview type (HRAssessment/TechnicalAssessment/NegotiationRound):");
+    //   if (interviewTypes.includes(interviewType)) {
+    //     newEventData.interviewType = interviewType;
+    //   }
 
-      if (interviewTypes.includes(interviewType)) {
-        newEventData.interviewType = interviewType;
-      }
-
-      calendarApi.addEvent(newEventData);
+    //   calendarApi.addEvent(newEventData);
     }
   };
 
@@ -71,11 +73,11 @@ const Calendar = () => {
 
   return (
     <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
-      <Header title="Calendar" subtitle="Set Event Dates for CV Management" />
+    <Header title="Calendar" subtitle="Set Event Dates for CV Management" />
 
       <Box display="flex" justifyContent="space-between">
 
-        {/* Calendar Sidebar */}
+        {/* Calander Sidebar */}
         <Box
           flex="1 1 20%"
           backgroundColor={colors.primary[400]}
@@ -95,18 +97,18 @@ const Calendar = () => {
               >
                 <ListItemText
                   primary={event.title}
-
                   secondary={
                     <>
-                      <Typography>
-                        {formatDate()}
-                      </Typography>
-                      <Typography>
-                        {event.extendedProps.interviewType} - {event.extendedProps.interviewerName}
-                      </Typography>
+                    <Typography>
+                      {formatDate()}
+                    </Typography>
+                    <Typography>
+                      {event.interviewType} - {event.interviewerName}
+                    </Typography>
                     </>
-
                   }
+
+
                 />
               </ListItem>
             ))}
@@ -141,9 +143,8 @@ const Calendar = () => {
                 id: "10",
                 title: "Dot Net Interview",
                 date: "2023-07-30",
-                interviewType: "HRAssessment",
-                interviewerName: "John Doe",
-                interviewerEmail: "john@example.com",
+                interviewerName: "Nitesh Dahal",
+                interviewerEmail: "DahalNitesh12@gmail.com",
               },
             ]}
           />

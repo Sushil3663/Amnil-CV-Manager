@@ -179,7 +179,8 @@ const Applicants = () => {
 
 
   return (
-    <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >        <Header title='Applicants' subtitle="Applied applicants list in Amnil" />
+    <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >     
+       <Header title='Applicants' subtitle="Applied applicants list in Amnil" />
 
       <Box mt="5px">
         <button

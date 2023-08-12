@@ -14,15 +14,14 @@ const OfferLetter = () => {
 
     const navigate = useNavigate()
 
-    // const [data, setData] = useState();
-    // console.log(data)
+
+
 
     const isDesktop = useMediaQuery("(min-width:600px)");
 
     const handleFormSubmit = (values) => {
-        // setData(values)
-
-        navigate("/letter", { state: values });
+        localStorage.setItem('offerLetterValues', JSON.stringify(values));
+        navigate("/template");
     };
 
     return (

@@ -15,6 +15,12 @@ export const fetchAssessments = async () => {
     return response.data;
   };
 
+  export const fetchStatus = async () => {
+    const response = await instance.get('/jobApplicationStatus');
+    return response.data;
+  };
+
+
   export const createAssessment = async (assessment) => {
     const response = await instance.post('/assessments', assessment);
     return response.data;
@@ -36,6 +42,13 @@ export const deleteApplicant = async (id) => {
   const response = await instance.delete(`/applicants/${id}`);
   return response.data;
 };
+
+export const deleteStatus = async (id) => {
+  const response = await instance.delete(`/jobApplicationStatus/${id}`);
+  return response.data;
+};
+
+
 // export const updateAssessment = async (id, updatedData) => {
 //   const response = await instance.put(`/assessments/${id}`, updatedData);;
 //   return response.data;

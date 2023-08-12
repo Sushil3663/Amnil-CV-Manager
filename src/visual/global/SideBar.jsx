@@ -19,6 +19,7 @@ import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 
 
 
@@ -162,7 +163,7 @@ const SideBar = () => {
 
             <MenuItem icon={<CalendarTodayOutlinedIcon />} style={{ color: colors.grey[100] }}>
               <Typography variant="h6" color={colors.grey[100]}>
-                Calander
+                Interview
               </Typography>
               <Link to="/calander" />
             </MenuItem>
@@ -225,12 +226,21 @@ const SideBar = () => {
               </Box>
             </Collapse>
 
+            <MenuItem icon={<LocalOfferOutlinedIcon />} style={{ color: colors.grey[100] }}>
+              <Typography variant="h6" color={colors.grey[100]}>
+                Letter Template
+              </Typography>
+              <Link to="/template" />
+            </MenuItem>
+
             <MenuItem icon={<ReceiptOutlinedIcon />} style={{ color: colors.grey[100] }}>
               <Typography variant="h6" color={colors.grey[100]}>
                 Offer Letter
               </Typography>
               <Link to="/offer" />
             </MenuItem>
+
+          
 
           </Box>)}
 

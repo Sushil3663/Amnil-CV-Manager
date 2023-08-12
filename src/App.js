@@ -24,6 +24,7 @@ import Assesment from "./visual/assesments/Assesment";
 import AssessmentForm from "./visual/assesments/AssessmentForm";
 import UpdateAssessmentForm from "./visual/assesments/UpdateAssessment";
 import UpdateFrom from "./visual/applicants/UpdateForm";
+import TemplateLetter from "./visual/lettertemplate/TemplateLetter";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -59,7 +60,10 @@ function App() {
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
               <Route path="/calander" element={<Calander />} />
+
               <Route path="/offer" element={<OfferLetter />} />
+              <Route path="/template" element={<TemplateLetter />} />
+              
               <Route path="/letter" element={<Letter />} />
               <Route path="/domain" element = {<JobDomain />} />
               <Route path="/level" element = {<JobLevel />} />
