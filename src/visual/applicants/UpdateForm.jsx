@@ -70,7 +70,7 @@ const UpdateFrom = () => {
       }
 
     return (
-        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
+        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)' }} >
 
             <Header title=" Update Assessment Form" subtitle=" Applicant Assessment Update" />
           

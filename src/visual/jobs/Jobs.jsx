@@ -9,7 +9,7 @@ const Jobs = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
-        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
+        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)' }} >
 
             <Header title="Job Status" subtitle=" Applicant JobStatus and JobLevel" />
 

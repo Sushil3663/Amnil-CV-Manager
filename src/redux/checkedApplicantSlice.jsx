@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   
-  selectedRows: []
+  selectedRows: [],
 };
 
 const checkedApplicantSlice = createSlice({
@@ -10,7 +10,8 @@ const checkedApplicantSlice = createSlice({
   initialState,
   reducers: {
     setSelectedRows: (state, action) => {
-      state.selectedRows = action.payload;
+      state.selectedRows.push(action.payload);
+
     },
     deleteSelectedApplicant:(state,action) =>{
       state.selectedRows = state.selectedRows.filter((element)=>{

@@ -6,63 +6,32 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
-import { setReason } from '../../redux/blacklistSlice';
+import { clearReason } from '../../redux/blacklistSlice';
 
-const ApplicantDetails = () => {
+const BlackListApplicant = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
     const { id: applicantID } = useParams();
 
     const dispatch = useDispatch();
 
     const applicants = useSelector((state) => state.applicants.applicants);
 
-    // const blacklistReasons = useSelector((state) => state.blacklistReasons);
+    const blacklistReasons = useSelector((state) => state.blacklistReasons);
 
     const navigate = useNavigate();
     const applicant = applicants.find((applicant) => applicant.id === applicantID);
 
-    const formatSalary = (salary) => {
 
-        return salary.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
 
-    const handleClickForm = () => {
-        navigate("/applicants")
+    const handlenavigate = () => {
+        navigate("/applicants/blacklist")
 
     }
-
-    const handlelist = () => {
-        const storedselectedCandidate = JSON.parse(localStorage.getItem('selectedRows'));
-
-        // Find the applicant with the matching ID
-        const applicant = applicants.find((applicant) => (applicant.id) === (applicantID));
-
-        if (applicant) {
-
-            // Prompt for the reason for blacklisting
-            const reason = prompt("Enter the reason for blacklisting this applicant:");
-
-            if (reason !== null) { // User didn't cancel
-                // Dispatch the action to set the reason in the Redux store
-                dispatch(setReason({ applicantID, reason }));
-            }
-            // Remove the applicant from the selectedRows localStorage
-            const filteredData = storedselectedCandidate.filter(item => item.id !== applicantID);
-            localStorage.setItem('selectedRows', JSON.stringify(filteredData));
-
-            // Add the applicant to the blacklist localStorage
-            const storedBlacklist = JSON.parse(localStorage.getItem('blacklist')) || [];
-            storedBlacklist.push(applicant);
-            localStorage.setItem('blacklist', JSON.stringify(storedBlacklist));
-        }
-
-        navigate(`/applicants/blacklist`);
+    const handleClearReason = () => {
+        // Dispatch the action to clear the reason in the Redux store
+        dispatch(clearReason({ applicantID }));
     };
-
-
 
 
     return (
@@ -84,7 +53,7 @@ const ApplicantDetails = () => {
                 mr={"10px"}
             >
                 <Button
-                    onClick={handleClickForm}
+                    onClick={handlenavigate}
                     style={{
                         background: 'green',
                         color: 'white',
@@ -98,26 +67,9 @@ const ApplicantDetails = () => {
                     }}
 
                 >
-                    ShortList <ReplyOutlinedIcon style={{ marginRight: '5px' }} />
+                    BlackList <ReplyOutlinedIcon style={{ marginRight: '5px' }} />
                 </Button>
-                <Button
-                    onClick={handlelist}
-                    style={{
-                        background: 'red',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
 
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'end',
-                        paddingLeft: '4px'
-                    }}
-
-                >
-                    BlackList <CreateNewFolderOutlinedIcon style={{ marginRight: '5px' }} />
-                </Button>
 
             </Box>
 
@@ -131,7 +83,7 @@ const ApplicantDetails = () => {
                     }}
                 >
                     <Typography variant="h4" color={colors.grey[100]}>
-                        Applicant Details
+                        BlackListed Applicant Details
                     </Typography>
                     <Paper
                         elevation={3}
@@ -203,19 +155,40 @@ const ApplicantDetails = () => {
                             <hr />
 
 
-                            <b>Expected Salary:</b> ${formatSalary(applicant.salary)} per year
 
                         </Typography>
                     </Paper>
-                    <Typography variant="body1" color={colors.grey[100]}>
-                        {`This applicant, ${applicant.name}, has a strong background in ${applicant.technology} with ${applicant.experience} of experience.
-                      They are currently at the ${applicant.level} level and expect a yearly salary of $${formatSalary(applicant.salary)}.
-                          For further contact, you can reach them at ${applicant.email} or ${applicant.phone}.`}
-                    </Typography>
+
                 </Box>
             )}
+
+
+            <Box>
+                {applicant && (
+                    <Box>
+                        {blacklistReasons[applicantID] && (
+                            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} marginTop={"5px"}>
+                                <Box>
+                                    <Typography variant="h6">
+                                        <b><u>Blacklist Reason:</u></b> <br />
+                                        {blacklistReasons[applicantID]}
+                                    </Typography>
+                                </Box>
+                                <Box paddingRight={"20px"}>
+                                    <Button onClick={handleClearReason} style={{ backgroundColor: "red" }}>Clear Reason</Button>
+                                </Box>
+                            </Box>
+                        )}
+                    </Box>
+                )}
+            </Box>
         </Box>
     );
 };
 
-export default ApplicantDetails;
+
+
+
+
+
+export default BlackListApplicant

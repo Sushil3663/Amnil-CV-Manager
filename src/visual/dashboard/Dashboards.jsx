@@ -15,7 +15,7 @@ const Dashboards = () => {
     const colors = tokens(theme.palette.mode)
 
     return (
-        <Box m="10px">
+        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)', mr:"5px",ml:"5px" }}>
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Header title="Dashboard" subtitle="Welcome to the Dashboard" />
             </Box>
@@ -29,17 +29,17 @@ const Dashboards = () => {
 
             <Box display="grid" gridTemplateColumns="repeat(9,1fr)" gap="15px"
                 gridAutoRows={"140px"} mt="8px">
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display={"flex"} justifyContent={"center"} alignItems={"center"} borderRadius={"5px"}>
+                <Box gridColumn="span 3" backgroundColor={colors.greenAccent[800]} display={"flex"} justifyContent={"center"} alignItems={"center"} borderRadius={"5px"}>
                     <StatBox title={"Ten(10)"} subtitle={"CV from Email"} progress="0.55" increase={'+10%'} icon={<EmailOutlinedIcon sx={{ color: colors.greenAccent[500] }} />} />
 
                 </Box>
 
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display={"flex"} justifyContent={"center"} alignItems={"center"} borderRadius={"5px"}>
+                <Box gridColumn="span 3" backgroundColor={colors.greenAccent[700]} display={"flex"} justifyContent={"center"} alignItems={"center"} borderRadius={"5px"}>
                     <StatBox title={"Five(5)"} subtitle={"CV from Page"} progress="0.8" increase={'+8%'} icon={<WebOutlinedIcon sx={{ color: colors.greenAccent[500] }} />} />
 
                 </Box>
 
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display={"flex"} justifyContent={"center"} alignItems={"center"} borderRadius={"5px"}>
+                <Box gridColumn="span 3" backgroundColor={colors.greenAccent[800]} display={"flex"} justifyContent={"center"} alignItems={"center"} borderRadius={"5px"}>
                     <StatBox title={"Fiften(15)"} subtitle={"Total CV"} progress="0.4" increase={'+9%'} icon={<FunctionsOutlinedIcon sx={{ color: colors.greenAccent[500] }} />} />
                 </Box>
 
@@ -49,14 +49,14 @@ const Dashboards = () => {
             <Box display="grid" gridTemplateColumns="repeat(6,1fr)" gap="10px">
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]}
                     mt={"10px"} borderRadius={"5px"}>
-                    <Box height={"230px"}>
+                    <Box height={"290px"}>
                         <LineCharts isDashboard={true} />
 
                     </Box>
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]}
                     mt={"10px"} borderRadius={"5px"}>
-                    <Box height={"230px"}>
+                    <Box height={"290px"}>
                         <BarChart isDashboard={true} />
 
                     </Box>

@@ -157,7 +157,7 @@ const JobLevel = () => {
 
 
     return (
-        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
+        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)' }} >
             <Box marginLeft={"40px"}>
                 <Header title='Candidate Status' subtitle="Selected candidate job Level" />
             </Box>

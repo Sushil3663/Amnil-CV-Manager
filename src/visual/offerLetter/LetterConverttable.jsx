@@ -3,40 +3,62 @@ import { tokens } from '../../Theme';
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import CancelPresentationOutlinedIcon from '@mui/icons-material/CancelPresentationOutlined';
+
 import Header from "../../components/Header";
-import { createApplicant  } from "../../api/Api";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { addApplicant } from "../../redux/applicantSlice";
-const CreateForm = () => {
+import { Link, useNavigate } from "react-router-dom";
+
+
+const OfferLetter = () => {
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+
+    const navigate = useNavigate()
+
+    
 
 
     const isDesktop = useMediaQuery("(min-width:600px)");
 
-    const handleFormSubmit = async(values) => {
-        try{
-            
-                const response = await createApplicant(values);
-                dispatch(addApplicant(response))
-          
-            navigate("/applicants");
-        }
-        catch(error){
-            console.error('Error creating Applicant:', error);
-
-        }
-    
-        
+    const handleFormSubmit = (values) => {
+        localStorage.setItem('offerLetterValues', JSON.stringify(values));
+        navigate("/template/offer")
     };
+   
 
     return (
         <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)' }} >
 
-            <Header title="Create User" subtitle="Create a New Applicant Profile" />
+            <Header title="Offer Letter Form" subtitle=" Applicant Offer Letter for Job Placement" />
+            <Box
+                display="flex"
+                justifyContent="end"
+                alignItems="center"
+                gap={2}
+                mt={2}
+                mb={2}
+                mr={"10px"}
+            >
+                
+                    <Link
+                        to="/rejectform"
+                    >
+                        <Button style={{
+                            background: 'red',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            padding: '8px 16px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}>Reject Form<CancelPresentationOutlinedIcon /></Button>
+
+                    </Link>
+            
+            </Box>
+
 
             <Formik
                 onSubmit={handleFormSubmit}
@@ -60,19 +82,7 @@ const CreateForm = () => {
                                 "& > div": { gridColumn: isDesktop ? undefined : "span 5" },
                             }}
                         >
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Id"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.id}
-                                name="id"
-                                error={!!touched.id && !!errors.id}
-                                helperText={touched.id && errors.id}
-                                sx={{ gridColumn: "span 2" }}
-                            />
+
                             <TextField
                                 fullWidth
                                 variant="filled"
@@ -84,7 +94,7 @@ const CreateForm = () => {
                                 name="name"
                                 error={!!touched.name && !!errors.name}
                                 helperText={touched.name && errors.name}
-                                sx={{ gridColumn: "span 2" }}
+                                sx={{ gridColumn: "span 4" }}
                             />
 
                             <TextField
@@ -98,7 +108,7 @@ const CreateForm = () => {
                                 name="email"
                                 error={!!touched.email && !!errors.email}
                                 helperText={touched.email && errors.email}
-                                sx={{ gridColumn: "span 2" }}
+                                sx={{ gridColumn: "span 4" }}
                             />
                             <TextField
                                 fullWidth
@@ -111,35 +121,22 @@ const CreateForm = () => {
                                 name="phone"
                                 error={!!touched.phone && !!errors.phone}
                                 helperText={touched.phone && errors.phone}
-                                sx={{ gridColumn: "span 2" }}
+                                sx={{ gridColumn: "span 4" }}
                             />
-                             <TextField
+
+                            <TextField
                                 fullWidth
                                 variant="filled"
                                 type="text"
-                                label="Reference"
+                                label="Address"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.reference}
-                                name="reference"
-                                error={!!touched.reference && !!errors.reference}
-                                helperText={touched.reference && errors.reference}
-                                sx={{ gridColumn: "span 2" }}
+                                value={values.address}
+                                name="address"
+                                error={!!touched.address && !!errors.address}
+                                helperText={touched.address && errors.address}
+                                sx={{ gridColumn: "span 4" }}
                             />
-                              <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Level"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.level}
-                                name="level"
-                                error={!!touched.level && !!errors.level}
-                                helperText={touched.level && errors.level}
-                                sx={{ gridColumn: "span 2" }}
-                            />
-                            
 
                             <TextField
                                 fullWidth
@@ -152,42 +149,16 @@ const CreateForm = () => {
                                 name="technology"
                                 error={!!touched.technology && !!errors.technology}
                                 helperText={touched.technology && errors.technology}
-                                sx={{ gridColumn: "span 2" }}
-                           />
-
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Salary"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.salary}
-                                name="salary"
-                                error={!!touched.salary && !!errors.salary}
-                                helperText={touched.salary && errors.salary}
-                                sx={{ gridColumn: "span 2" }}
-                            />
-                             <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Experience"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.experience}
-                                name="experience"
-                                error={!!touched.experience && !!errors.experience}
-                                helperText={touched.experience && errors.experience}
                                 sx={{ gridColumn: "span 4" }}
                             />
-                            
+
+
 
 
                         </Box>
                         <Box display="flex" justifyContent="end" mt="20px">
                             <Button type="submit" color="secondary" variant="contained">
-                                Create
+                                OfferLetter
                             </Button>
                         </Box>
                     </form>
@@ -201,32 +172,25 @@ const ValidateNumber =
     /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-    id: yup.string().required("required"),
     name: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
     phone: yup
         .string()
         .matches(ValidateNumber, "Phone number is not valid")
         .required("required"),
+    address: yup.string().required("required"),
     technology: yup.string().required("required"),
-    reference: yup.string().required("required"),
-    level: yup.string().required("required"),
-    salary: yup.string().required("required"),
-    experience: yup.string().required("required"),
 
 });
 const initialValues = {
-    id: "",
+
     name: "",
     email: "",
     phone: "",
+    address: "",
     technology: "",
-    reference: "",
-    level: "",
-    salary: "",
-    experience: "",
 
 
 };
 
-export default CreateForm;
+export default OfferLetter;

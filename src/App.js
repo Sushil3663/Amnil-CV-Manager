@@ -25,14 +25,31 @@ import AssessmentForm from "./visual/assesments/AssessmentForm";
 import UpdateAssessmentForm from "./visual/assesments/UpdateAssessment";
 import UpdateFrom from "./visual/applicants/UpdateForm";
 import TemplateLetter from "./visual/lettertemplate/TemplateLetter";
+import RejectTemplate from "./visual/lettertemplate/RejectTemplate";
+import Template from "./visual/lettertemplate/Template";
+import PreviewLetter from "./visual/offerLetter/PreviewLetter";
+import CalanderList from "./visual/calander/CalanderList";
+import BlackListApplicant from "./visual/applicants/BlackListApplicant";
+import BlackList from "./visual/applicants/BlackList";
+import { useAuth0 } from "@auth0/auth0-react";
+import Auth0ProviderWithHistory from "./Auth0ProviderWithHistory";
+import LoginButton from "./visual/global/Login";
+import DotNetTemplate from "./visual/lettertemplate/DotNetTemplate";
+import ReactTemplate from "./visual/lettertemplate/ReactTemplate";
+import QATemplate from "./visual/lettertemplate/QATemplate";
+import HRTemplate from "./visual/lettertemplate/HRTemplate";
 
 function App() {
+  const { isAuthenticated } = useAuth0();
   const [theme, colorMode] = useMode();
 
   return (
+
     <colorContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <div className="app">
+        {isAuthenticated ? <div className="app">
+
+
 
           <SideBar />
 
@@ -40,8 +57,12 @@ function App() {
             <TopBar />
             <Routes>
               <Route path="/" element={<Dashboards />} />
+              {/* <Route path="/" element={isAuthenticated ? <Dashboards /> : <LoginButton />} /> */}
 
               <Route path="/applicants" element={<Applicants />} />
+              <Route path="/applicants/blacklist" element={<BlackList />} />
+              <Route path="/applicants/list/:id" element={<BlackListApplicant />} />
+
               <Route path="/applicants/:id" element={<ApplicantDetails />} />
               <Route path="/updateapplicant/:id" element={<UpdateFrom />} />
 
@@ -50,7 +71,7 @@ function App() {
               <Route path="/contact/:id" element={<CandidateDetail />} />
 
               <Route path="/form" element={<CreateForm />} />
-              
+
               <Route path="/assesment" element={<Assesment />} />
               <Route path="/assesmentform" element={<AssessmentForm />} />
               <Route path="/updateassessmentForm/:id" element={<UpdateAssessmentForm />} />
@@ -59,23 +80,44 @@ function App() {
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
+
               <Route path="/calander" element={<Calander />} />
+              <Route path="/calanderlist" element={<CalanderList />} />
+
 
               <Route path="/offer" element={<OfferLetter />} />
-              <Route path="/template" element={<TemplateLetter />} />
-              
+              <Route path="/offerform/:id" element={<PreviewLetter />} />
+
+              <Route path="/template/" element={<TemplateLetter />} >
+                <Route index element={<Template />} />
+                <Route path="offer" element={<Template />} />
+                <Route path="reject" element={<RejectTemplate />} />
+                <Route path="dotnet" element={<DotNetTemplate />} />
+                <Route path="react" element={<ReactTemplate />} />
+                <Route path="hr" element={<HRTemplate />} />
+                <Route path="qa" element={<QATemplate />} />
+              </Route>
+
               <Route path="/letter" element={<Letter />} />
-              <Route path="/domain" element = {<JobDomain />} />
-              <Route path="/level" element = {<JobLevel />} />
-              <Route path="/status" element = {<JobApplicationStatus />} />
-              <Route path="/position" element = {<JobPosition />} />
+
+              <Route path="/domain" element={<JobDomain />} />
+              <Route path="/level" element={<JobLevel />} />
+              <Route path="/status" element={<JobApplicationStatus />} />
+              <Route path="/position" element={<JobPosition />} />
               <Route path="/position/:id" element={<JobDesc />} />
 
 
-             
+
             </Routes>
           </main>
+
         </div>
+
+
+          : <LoginButton />}
+
+
+
       </ThemeProvider>
     </colorContext.Provider>
 

@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { tokens } from '../../Theme';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -46,13 +46,54 @@ const JobApplicationStatus = () => {
 };
 
   const columns = [
-    { field: 'Name', headerName: 'Name',flex: 1},
-    { field: 'Applied', headerName: 'Applied',flex: 1 },
-    { field: 'InterviewScheduled', headerName: 'InterviewScheduled',flex: 1 },
-    { field: 'Accepted', headerName: 'Accepted' },
-    { field: 'Await', headerName: 'Await',flex: 1},
-    { field: 'status', headerName: 'status',flex: 1 },
-    { field: 'OfferLetter', headerName: 'OfferLetter',flex: 1 },
+    { field: 'name', headerName: 'Name',flex: 1},
+    { field: 'technology', headerName: 'Technology',flex: 1 },
+    // { field: 'InterviewScheduled', headerName: 'InterviewScheduled',flex: 1 },
+    // { field: 'Accepted', headerName: 'Accepted' },
+    // { field: 'Await', headerName: 'Await',flex: 1},
+    // { field: 'status', headerName: 'status',flex: 1 },
+    // { field: 'OfferLetter', headerName: 'OfferLetter',flex: 1 },
+   
+    {
+      field: 'accepted',
+      headerName: 'Accepted',
+      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          Yes  
+        </Box>
+      ),
+    },
+    {
+      field: 'response',
+      headerName: 'Response',
+      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          Await  
+        </Box>
+      ),
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          Hired  
+        </Box>
+      ),
+    },
+    {
+      field: 'offerletter',
+      headerName: 'OfferLetter',
+      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          Send  
+        </Box>
+      ),
+    },
     {
         field: "operation",
         headerName: "Operation",
@@ -64,7 +105,7 @@ const JobApplicationStatus = () => {
             }}>
 
   
-              <button
+              <Button
                 onClick={(event) => {
                   event.stopPropagation();
                   if (event.target.tagName !== "INPUT") {
@@ -84,7 +125,7 @@ const JobApplicationStatus = () => {
                 data-operation="delete"
               >
                 <DeleteIcon />
-              </button>
+              </Button>
             </Box>
   
           );

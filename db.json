@@ -9,20 +9,39 @@
       "expirydate": "2023-08-15",
       "evaluation": "Very Good",
       "remark": "Impressive!"
+    },
+    {
+      "id": "2",
+      "cid": "2",
+      "title": "Assessment 2",
+      "testurl": "https://AssesssmentNode.com/assessment2-node",
+      "creationdate": "2023-08-17",
+      "expirydate": "2023-08-19",
+      "evaluation": "Very Good",
+      "remark": "Very Good!"
+    },
+    {
+      "id": "3",
+      "cid": "3",
+      "title": "Assessment 3",
+      "testurl": "https://AssesssmentReact.com/assessment3-react",
+      "creationdate": "2023-08-17",
+      "expirydate": "2023-08-22",
+      "evaluation": "Impressive",
+      "remark": "Very Good"
+    },
+    {
+      "id": "4",
+      "cid": "4",
+      "title": "Assessment 4",
+      "testurl": "https://AssesssmentPhp.com/assessment4-php",
+      "creationdate": "2023-08-19",
+      "expirydate": "2023-08-22",
+      "evaluation": "Good",
+      "remark": "Good!"
     }
   ],
   "applicants": [
-    {
-      "id": "1",
-      "name": "Sushil Karki",
-      "email": "karkisushil309@gmail.com",
-      "phone": "9810578044",
-      "technology": "ReactJs",
-      "reference": "pdf",
-      "level": "Mid",
-      "salary": "30k",
-      "experience": "7 month"
-    },
     {
       "id": "2",
       "name": "Hari Gautam ",
@@ -79,58 +98,50 @@
       "experience": "7 Month"
     },
     {
-      "id": "7",
-      "name": "Sauwan Thapa ",
-      "email": "ThapaSauwan53@gmail.com",
-      "phone": "9857875112",
-      "technology": "Java",
-      "reference": "Website",
-      "level": "junior",
-      "salary": "20k",
-      "experience": "7 Month"
-    },
-    {
       "id": "8",
-      "name": "Priyansu Kharel ",
-      "email": "PriyansuKharel1@gmail.com",
-      "phone": "9819589551",
-      "technology": "NodeJS",
-      "reference": "pdf",
+      "name": "Sanjeeb Karki",
+      "email": "sanjeebkarki64@gmail.com",
+      "phone": "+9779863991355",
+      "technology": "React",
+      "reference": "Website",
       "level": "Mid",
-      "salary": "30k",
-      "experience": "1 Year"
+      "salary": "50k",
+      "experience": " 1 Year"
     }
   ],
   "jobApplicationStatus": [
     {
-      "id": 1,
-      "Name": "Sushil Karki",
-      "Applied": "Yes",
-      "InterviewScheduled": "Yes",
-      "Accepted": "Yes",
-      "Await": "Parked",
-      "status": "Hired",
-      "OfferLetter": "Sent"
+      "id": "3",
+      "name": "ujjwal Gautam ",
+      "email": "GautamUjjwal22@gmail.com",
+      "phone": "9742045751",
+      "reference": "Website",
+      "technology": "Dot Net",
+      "level": "Mid",
+      "salary": "40k",
+      "experience": "1 Year"
     },
     {
-      "id": 2,
-      "Name": "Ujjwal Gautam",
-      "Applied": "Yes",
-      "InterviewScheduled": "Yes",
-      "Accepted": "Yes",
-      "Await": "Parked",
-      "status": "Hired",
-      "OfferLetter": "Sent"
+      "id": "4",
+      "name": "Laxmi Shrestha ",
+      "email": "ShresthaLaxmi@gmail.com",
+      "phone": "9853991355",
+      "reference": "pdf",
+      "technology": "QA",
+      "level": "Mid",
+      "salary": "40k",
+      "experience": "1 Year"
     },
     {
-      "id": 3,
-      "Name": "Pujan Rai",
-      "Applied": "Yes",
-      "InterviewScheduled": "No",
-      "Accepted": "No",
-      "Await": "Blocked",
-      "status": "Black Listed",
-      "OfferLetter": "Not Sent"
+      "id": "5",
+      "name": "Subash Badiya ",
+      "email": "Subash11@gmail.com",
+      "phone": "9813455012",
+      "reference": "Website",
+      "technology": "HR",
+      "level": "Sunior",
+      "salary": "50k",
+      "experience": "3 Year"
     }
   ]
 }

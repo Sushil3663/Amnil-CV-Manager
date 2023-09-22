@@ -4,7 +4,9 @@ import { useTheme } from '@emotion/react';
 import { tokens } from '../../Theme';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { formatDate } from '../calander/FormateDate';
+import { formatDate } from '../calander/FormateDate'
+
+
 const CandidateDetail = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -12,9 +14,15 @@ const CandidateDetail = () => {
 
     const { id: ids } = useParams();
 
-    const selectedapplicants = useSelector((state) => state.checkedApplicants.selectedRows)
+    // const selectedapplicants = useSelector((state) => state.checkedApplicants.selectedRows)
+    // console.log(selectedapplicants)
 
-    const applicant = selectedapplicants.find((applicant) => applicant.id === ids);
+    // const storedData = JSON.parse(localStorage.getItem('selectedRows')) || [];
+
+    const applicants = useSelector((state) => state.applicants.applicants);
+
+    const applicant = applicants.find((applicant) => applicant.id === ids);
+  
 
     const formatSalary = (salary) => {
         // Format the salary with commas for thousands separator
@@ -25,7 +33,7 @@ const CandidateDetail = () => {
         <Box
             sx={{
                 background: `${colors.primary[400]} !important`,
-                height: 'calc(100vh - 11.5vh)',
+                height: 'calc(100vh - 10vh)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -42,44 +50,48 @@ const CandidateDetail = () => {
                         gap: '10px',
                     }}
                 >
-                    <Typography variant="h2" color={colors.grey[100]}>
+                    <Typography variant="h4" color={colors.grey[100]}>
                         Selected Applicant Details
                     </Typography>
                     <Box
                         sx={{
-                            background: colors.blueAccent[700],
+                            background: colors.primary[400],
                             padding: '20px',
                             borderRadius: '8px',
-                            boxShadow: `0px 3px 5px rgba(0, 0, 0, 0.2)`,
+                            boxShadow: `7px 7px 30px rgba(0.8, 0.8, 0.8, 0.8)`,
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '10px',
                         }}
                     >
-                        <Typography variant="h6" color={colors.greenAccent[400]}>
-                            <p>Name: {applicant.name}</p>
-                            <p>Email: {applicant.email}</p>
-                            <p>Phone: {applicant.phone}</p>
-                            <p>
-                                Technology: {applicant.technology} - Level: {applicant.level}
+                        <Typography variant="h6" color={colors.grey[100]}>
+                            <p><b>Name:</b> {applicant.name}</p>
+                            <p><b>Email: </b>{applicant.email}</p>
+                            <p><b>Phone:</b> {applicant.phone}</p>
+                            <p><b>
+                                Technology:  </b> {applicant.technology} -<b> Level:</b> {applicant.level}
+                              
                             </p>
                             <p>
-                                Salary: ${formatSalary(applicant.salary)} per year
+                                <b>Salary:</b>${formatSalary(applicant.salary)} per year
                             </p>
-                            <p>Experience: {applicant.experience}</p>
+                            <p><b>Experience:</b> {applicant.experience}</p>
                         </Typography>
                     </Box>
                     <Typography variant="body1" color={colors.grey[100]}>
 
-                        {`This applicant, ${applicant.name}, has a strong background in ${applicant.technology} with ${applicant.experience} of experience.
-                      They are currently at the ${applicant.level} level and expect a yearly salary of $${formatSalary(applicant.salary)}. 
+                        {`This applicant, ${applicant.name}, has a strong background in ${applicant.technology} with
+                         ${applicant.experience} of experience.
+                      They are currently at the ${applicant.level} level and expect a yearly salary of
+                       $${formatSalary(applicant.salary)}. 
                           For further contact, you can reach them at ${applicant.email} or ${applicant.phone}.
                           `}
 
                     </Typography>
                     <Typography variant="body1" color={colors.grey[100]}>
 
-                        {`The applicant can have his/her final interview round at {formatDate()}. He/She is requisted to arrive at Amnil technology at 9:45 AM .`}
+                        The applicant can have his/her final interview round at {formatDate()} . He/She is requisted to
+                         arrive at Amnil technology at 9:45 AM .
 
                     </Typography>
                 </Box>

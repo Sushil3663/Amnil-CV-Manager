@@ -3,20 +3,24 @@ import React, { useRef, useState, useEffect } from 'react';
 import JoditEditor from 'jodit-react';
 import Logo from '../../assets/Amnil Logo.png'
 import { formatDate } from '../calander/FormateDate';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 
-const Template = () => {
+const ReactTemplate = () => {
 
     const editor = useRef(null);
 
+    const handleView = () => {
+        const status = 'true';
+        localStorage.setItem('ReactStatus', status);
+    }
 
 
     const [content, setContent] = useState('');
 
     useEffect(() => {
 
-        const savedValues = JSON.parse(localStorage.getItem('offerLetterFormData'));
+        const savedValues = JSON.parse(localStorage.getItem('ReactTemplate'));
 
         const savedContent = localStorage.getItem('offerLetterContent') || `
          
@@ -63,13 +67,9 @@ const Template = () => {
                 onChange={(newContent) => setContent(newContent)}
                 onBlur={(newContent) => setContent(newContent)}
             />
-
-            {/* <Box>
+            <Box>
                 <Button
-                    //   onClick={() => handleView(params.id)}
-
-
-
+                    onClick={() => handleView()}
                     style={{
                         background: 'green',
                         color: 'white',
@@ -85,9 +85,9 @@ const Template = () => {
                 >Send Letter
 
                 </Button>
-            </Box> */}
+            </Box>
         </Box>
     );
 };
 
-export default Template;
+export default ReactTemplate;

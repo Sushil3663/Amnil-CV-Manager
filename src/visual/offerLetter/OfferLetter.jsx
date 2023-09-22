@@ -1,166 +1,312 @@
-import { Box, Button, TextField, useTheme } from "@mui/material";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
+import { Box, Button, MenuItem, Select, Typography, useTheme } from '@mui/material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { tokens } from '../../Theme';
-import { Formik } from "formik";
-import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
-import Header from "../../components/Header";
-import { useNavigate } from "react-router-dom";
+import Header from '../../components/Header';
+import { useNavigate } from 'react-router-dom';
+
 
 const OfferLetter = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
 
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+  const getStatus = (templateName) => {
+    // Retrieve the status for the given template name from local storage
+    console.log(templateName);
+    const status = localStorage.getItem(`${templateName}`);
+    return status === 'true' ? 'Sent' : 'Pending';
+  };
+ 
+  const [offeredApplicant, setOfferedApplicant] = useState(() => {
+    const data = JSON.parse(localStorage.getItem('offeredRows')) || [];
+    return data;
+  });
 
-    const navigate = useNavigate()
+  const generateUniqueId = () => {
+    return Math.random().toString(36).substr(2, 9);
+  };
 
-
-
-
-    const isDesktop = useMediaQuery("(min-width:600px)");
-
-    const handleFormSubmit = (values) => {
-        localStorage.setItem('offerLetterValues', JSON.stringify(values));
-        navigate("/template");
-    };
-
-    return (
-        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
-
-            <Header title="Offer Letter" subtitle=" Applicant Offer Letter for Job Placement" />
-
-
-            <Formik
-                onSubmit={handleFormSubmit}
-                initialValues={initialValues}
-                validationSchema={checkoutSchema}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleBlur,
-                    handleChange,
-                    handleSubmit,
-                }) => (
-                    <form onSubmit={handleSubmit}>
-                        <Box
-                            display="grid"
-                            gap="30px"
-                            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                            sx={{
-                                "& > div": { gridColumn: isDesktop ? undefined : "span 5" },
-                            }}
-                        >
-
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Name"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.name}
-                                name="name"
-                                error={!!touched.name && !!errors.name}
-                                helperText={touched.name && errors.name}
-                                sx={{ gridColumn: "span 4" }}
-                            />
-
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Email"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.email}
-                                name="email"
-                                error={!!touched.email && !!errors.email}
-                                helperText={touched.email && errors.email}
-                                sx={{ gridColumn: "span 4" }}
-                            />
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Phone Number"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.phone}
-                                name="phone"
-                                error={!!touched.phone && !!errors.phone}
-                                helperText={touched.phone && errors.phone}
-                                sx={{ gridColumn: "span 4" }}
-                            />
-
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Address"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.address}
-                                name="address"
-                                error={!!touched.address && !!errors.address}
-                                helperText={touched.address && errors.address}
-                                sx={{ gridColumn: "span 4" }}
-                            />
-
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Technology"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.technology}
-                                name="technology"
-                                error={!!touched.technology && !!errors.technology}
-                                helperText={touched.technology && errors.technology}
-                                sx={{ gridColumn: "span 4" }}
-                            />
+  const [selectedOfferLetters, setSelectedOfferLetters] = useState([]);
+  const [selectedCandidate, setSelectedCandidate] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState('');
 
 
+  useEffect(() => {
+    const storedOfferLetters = JSON.parse(localStorage.getItem('ReviewLetter')) || [];
+    setSelectedOfferLetters(storedOfferLetters);
+
+    const storedSelectedCandidate = localStorage.getItem('selectedCandidate') || [];
+    const storedSelectedTemplate = localStorage.getItem('selectedTemplate') || [];
+
+      if (storedSelectedCandidate) {
+      setSelectedCandidate(storedSelectedCandidate);
+    }
+
+    if (storedSelectedTemplate) {
+      setSelectedTemplate(storedSelectedTemplate);
+    }
+
+  },[]);
+ 
 
 
-                        </Box>
-                        <Box display="flex" justifyContent="end" mt="20px">
-                            <Button type="submit" color="secondary" variant="contained">
-                                OfferLetter
-                            </Button>
-                        </Box>
-                    </form>
-                )}
-            </Formik>
-        </Box>
+  const handleCreateClick = () => {
+    const selectedCandidateData = offeredApplicant.find(
+      (applicant) => applicant.name === selectedCandidate
     );
-};
 
-const ValidateNumber =
-    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+    let templateName = '';
+  
+    switch (selectedTemplate) {
+      case 'dotnet':
+        templateName = 'DotNetTemplate';
+        break;
+      case 'react':
+        templateName = 'ReactTemplate';
+        break;
+      case 'qa':
+        templateName = 'QATemplate';
+        break;
+      case 'hr':
+        templateName = 'HRTemplate';
+        break;
+      default:
+        templateName = 'UnknownTemplate';
+        break;
+    }
+  
+    const newOfferLetter = {
+      id: generateUniqueId(),
+      name: selectedCandidateData.name,
+      technology: selectedTemplate,
+      template: templateName,
 
-const checkoutSchema = yup.object().shape({
-    name: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    phone: yup
-        .string()
-        .matches(ValidateNumber, "Phone number is not valid")
-        .required("required"),
-    address: yup.string().required("required"),
-    technology: yup.string().required("required"),
+    };
+    const updatedOfferLetters = [...selectedOfferLetters, newOfferLetter];
+    setSelectedOfferLetters(updatedOfferLetters);
+    localStorage.setItem('ReviewLetter', JSON.stringify(updatedOfferLetters));
 
-});
-const initialValues = {
-
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    technology: "",
+    
+    // // Stored selectedCandidate and selectedTemplate in localStorage
+    localStorage.setItem('selectedCandidate', (selectedCandidate));
+    localStorage.setItem('selectedTemplate', (selectedTemplate));
 
 
+
+    
+  };
+
+  const handleView = (id, template) => {
+    // console.log(template);
+    console.log(id);
+    const selectedCandidateData = offeredApplicant.find(
+      (applicant) => applicant.name === selectedCandidate
+    );
+    const formDataJSON = JSON.stringify(selectedCandidateData);
+    let templateTech = '';
+  
+    switch (template) {
+      case 'DotNetTemplate':
+        templateTech = 'dotnet';
+        break;
+      case 'ReactTemplate':
+        templateTech = 'react';
+        break;
+      case 'QATemplate':
+        templateTech = 'qa';
+        break;
+      case 'HRTemplate':
+        templateTech = 'hr';
+        break;
+      default:
+        templateTech = 'ut';
+        break;
+    }
+
+    localStorage.setItem(`${selectedTemplate}Template`, formDataJSON);
+
+    navigate(`/template/${templateTech}`);
+  };
+
+  const columns = [
+    {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+      cellClassName: 'name-column-cell',
+    },
+    {
+      field: 'technology',
+      headerName: 'Technology',
+      flex: 1,
+    },
+    {
+      field: 'template',
+      headerName: 'Template',
+      flex: 1,
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      flex: 1,
+      renderCell: (params,event) => (
+        <Box>
+          <Button
+           onClick={() => handleView(params.id, params.row.template)}
+            style={{
+              background: 'green',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '8px 16px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+            data-operation="preview"
+          >
+           {getStatus(params.row.template) === 'Sent' ? 'Preview' : 'Review'}
+          </Button>
+        </Box>
+      ),
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          <Typography>{getStatus(params.row.template)}</Typography>
+        </Box>
+      ),
+    },
+    
+  ];
+
+  const handleRowClick = (params, event) => {
+    const isPreviewButton = event.target.tagName === 'BUTTON' && event.target.getAttribute('data-operation') === 'preview';
+    
+   
+    if (isPreviewButton) {
+      return;
+    }
+    const selectedCandidates = offeredApplicant.find(
+      (applicant) => applicant.name === selectedCandidate
+    );
+
+    console.log(selectedCandidates.id)
+  
+    const applicantId=  selectedCandidates.id
+  
+    navigate(`/offerform/${applicantId}`);
+  };
+
+  return (
+    <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)', paddingRight: '10px' }}>
+      <Box>
+        <Header title="Offer Letter Status" subtitle="Selected Candidate for sending Offer Letter" />
+      </Box>
+
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box>
+          <Select
+            displayEmpty
+            value={selectedCandidate}
+            onChange={(e) => setSelectedCandidate(e.target.value)}
+            variant="outlined"
+            sx={{ marginRight: '16px' }}
+          >
+            <MenuItem  value=""  style={{ color: colors.grey[100] }}>
+              Candidate
+            </MenuItem>
+            {offeredApplicant.map((applicant, index) => (
+              <MenuItem key={index} value={applicant.name}>
+                {applicant.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+
+        <Box>
+          <Select
+            displayEmpty
+            value={selectedTemplate}
+            onChange={(e) => setSelectedTemplate(e.target.value)}
+            variant="outlined"
+            sx={{ marginRight: '16px' }}
+          >
+            <MenuItem  value="" style={{ color: colors.grey[100] }}>
+              Choose OfferLetter
+            </MenuItem>
+            <MenuItem value="dotnet" style={{ color: colors.grey[100] }}>
+              DotNetTemplate
+            </MenuItem>
+            <MenuItem value="react" style={{ color: colors.grey[100] }}>
+              ReactTemplate
+            </MenuItem>
+            <MenuItem value="qa" style={{ color: colors.grey[100] }}>
+              QATemplate
+            </MenuItem>
+            <MenuItem value="hr" style={{ color: colors.grey[100] }}>
+              HRTemplate
+            </MenuItem>
+          </Select>
+        </Box>
+        <Box sx={{ background: `${colors.primary[400]} !important` }}>
+          <Button variant="contained" onClick={handleCreateClick}>
+            <Typography>Create</Typography>
+          </Button>
+        </Box>
+      </Box>
+
+      <Box
+        m="40px 0 0 0"
+        height="65vh"
+        sx={{
+          '& .MuiDataGrid-root': {
+            border: 'none',
+          },
+          '& .MuiDataGrid-cell': {
+            borderBottom: 'none',
+          },
+          '& .name-column--cell': {
+            color: colors.greenAccent[300],
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: 'none',
+          },
+          '& .MuiDataGrid-virtualScroller': {
+            backgroundColor: colors.primary[400],
+          },
+          '& .MuiDataGrid-footerContainer': {
+            borderTop: 'none',
+            backgroundColor: colors.blueAccent[700],
+          },
+          '& .MuiCheckbox-root': {
+            color: `${colors.greenAccent[200]} !important`,
+          },
+          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+            color: `${colors.grey[100]} !important`,
+          },
+        }}
+      >
+        <DataGrid
+          checkboxSelection
+          rows={selectedOfferLetters}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+          onRowClick={handleRowClick}
+          rowsPerPageOptions={[10, 20, 50]}
+          pagination
+        />
+
+      </Box>
+    </Box>
+  );
 };
 
 export default OfferLetter;

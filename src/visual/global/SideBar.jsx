@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Box, useTheme, IconButton, Typography, Collapse } from '@mui/material';
+import { Box, useTheme, IconButton, Typography, Collapse, Button } from '@mui/material';
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import { Link } from 'react-router-dom';
@@ -21,37 +21,21 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 
-
-
-
-// const Item = ({ title, to, icon, selected, setSelected }) => {
-//   const theme = useTheme();
-//   const colors = tokens(theme.palette.mode);
-//   return (
-//     <MenuItem
-//       active={selected === title}
-//       style={{
-//         color: colors.grey[100],
-//       }}
-//       onClick={() => setSelected(title)}
-//       icon={icon}
-//     >
-//       <Typography>{title}</Typography>
-//       <Link to={to} />
-//     </MenuItem>
-//   );
-// };
-
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { useAuth0 } from "@auth0/auth0-react";
+import Profile from './Profile';
 
 const SideBar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  // const [selected, setSelected] = useState("Dashboard");
+
+  const { logout } = useAuth0();
+
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const [isJobsOpen, setIsJobsOpen] = useState(false); // Added state for the dropdown
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorel, setAnchorel] = useState(null);
 
   const collapsed = () => {
     setIsCollapsed(!isCollapsed)
@@ -62,7 +46,7 @@ const SideBar = () => {
   };
 
   const handleDropdownToggle = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setAnchorel(anchorel ? null : event.currentTarget);
   };
 
 
@@ -112,15 +96,7 @@ const SideBar = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            <Box display={"flex"} flexDirection={"column"} alignItems={"center"} pb={"15px"}>
-              <IconButton >
-                <AccountCircleRoundedIcon style={{ width: "40px", height: "50px" }} />
-              </IconButton>
-              <Typography variant="h5" color={colors.grey[100]}>
-                Profile
-              </Typography>
-
-            </Box>)}
+            <Profile />)}
 
 
 
@@ -182,47 +158,47 @@ const SideBar = () => {
 
             </MenuItem>
             <Collapse in={isJobsOpen}>
-            <Box marginLeft={"15px"} color={colors.grey[100]}>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleDropdownToggle}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-              >
-                
+              <Box marginLeft={"15px"} color={colors.grey[100]}>
+                <Menu
+                  anchorel={anchorel}
+                  open={Boolean(anchorel)}
+                  onClose={handleDropdownToggle}
+                  anchororigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  transformorigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                >
+
                   <MenuItem onClick={handleDropdownToggle} style={{ color: colors.grey[100] }}>
-                     
-                  <Link to="/domain">
-                     <Typography variant="h6" color={colors.grey[100]}>Job Domain </Typography>
-                  </Link>
+
+                    <Link to="/domain">
+                      <Typography variant="h6" color={colors.grey[100]}>Job Domain </Typography>
+                    </Link>
                   </MenuItem>
 
                   <MenuItem onClick={handleDropdownToggle} style={{ color: colors.grey[100] }}>
                     <Link to="/level">
-                    <Typography variant="h6" color={colors.grey[100]}>Job Level</Typography>
+                      <Typography variant="h6" color={colors.grey[100]}>Job Level</Typography>
                     </Link>
                   </MenuItem>
 
                   <MenuItem onClick={handleDropdownToggle} style={{ color: colors.grey[100] }}>
                     <Link to="/position">
-                    <Typography variant="h6" color={colors.grey[100]}>Job Position</Typography>
+                      <Typography variant="h6" color={colors.grey[100]}>Job Position</Typography>
                     </Link>
                   </MenuItem>
 
                   <MenuItem onClick={handleDropdownToggle} style={{ color: colors.grey[100] }}>
                     <Link to="/status">
-                    <Typography variant="h6" color={colors.grey[100]}>Job Application Status</Typography>
+                      <Typography variant="h6" color={colors.grey[100]}>Job Application Status</Typography>
                     </Link>
                   </MenuItem>
 
-              </Menu>
+                </Menu>
               </Box>
             </Collapse>
 
@@ -240,7 +216,16 @@ const SideBar = () => {
               <Link to="/offer" />
             </MenuItem>
 
-          
+            <MenuItem icon={<LogoutOutlinedIcon />} style={{ color: colors.grey[100] }}>
+              <Typography variant="h6" color={colors.grey[100]}>
+                <Button style={{ color: colors.grey[100] }} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                  LogOut
+                </Button>
+              </Typography>
+
+            </MenuItem>
+
+
 
           </Box>)}
 

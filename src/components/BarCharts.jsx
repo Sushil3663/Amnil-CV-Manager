@@ -128,3 +128,4 @@ const BarChart = ({ isDashboard = false }) => {
 };
 
 export default BarChart;
+

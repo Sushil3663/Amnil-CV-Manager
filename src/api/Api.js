@@ -20,9 +20,13 @@ export const fetchAssessments = async () => {
     return response.data;
   };
 
-
   export const createAssessment = async (assessment) => {
     const response = await instance.post('/assessments', assessment);
+    return response.data;
+  };
+
+  export const createCandidateStatus = async (status) => {
+    const response = await instance.post('/jobApplicationStatus', status);
     return response.data;
   };
 
@@ -30,7 +34,6 @@ export const fetchAssessments = async () => {
     const response = await instance.post('/applicants', applicant);
     return response.data;
   };
-
 
 
   export const deleteAssessment = async (id) => {

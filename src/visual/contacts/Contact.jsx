@@ -2,22 +2,15 @@ import React from 'react'
 import { Box, useTheme } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { tokens } from '../../Theme';
-// import { candidateData as initialcandidateData } from '../../data/dummyData';
+
 import Header from '../../components/Header';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-// import { useReducer } from 'react';
-// import { reducer } from '../../components/Redux';
-import { useSelector, useDispatch } from 'react-redux';
+
+import {  useDispatch, useSelector } from 'react-redux';
 import { deleteSelectedApplicant } from '../../redux/checkedApplicantSlice'; 
 import { useNavigate } from 'react-router-dom'; 
-
-// const initialState = {
-//   item: initialcandidateData,
-  
-// }
-
-
+import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 
 const Candidate = () => {
 
@@ -27,36 +20,66 @@ const Candidate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const selectedapplicants = useSelector((state) => state.checkedApplicants.selectedRows);
+  const selectedCandidate= useSelector((state) => state.checkedApplicants.selectedRows);
+  console.log(selectedCandidate)
+  
+// useEffect(()=>{
+//   const storedselectedCandidate = JSON.parse(localStorage.getItem('selectedRows'));
 
-  // const [state, dispatch] = useReducer(reducer, initialState);
+// },[])
+  
 
+const storedselectedCandidate = JSON.parse(localStorage.getItem('selectedRows'));
+
+// const applicants = useSelector((state) => state.applicants.applicants);
 
   const handleDelete = (id) => {
-    dispatch(deleteSelectedApplicant(id))
+    const confirmed = window.confirm("Are you sure you want to delete this applicant..?");
+    if(confirmed){
+      try {
+        dispatch(deleteSelectedApplicant(id))
 
-    const localStorageKey = 'selectedRows';
-    const storedData = JSON.parse(localStorage.getItem('selectedRows'));
-    if (storedData) {
-      const filteredData = storedData.filter(item => !id.includes(item.id));
-      localStorage.setItem(localStorageKey, JSON.stringify(filteredData));
+        const localStorageKey = 'selectedRows';
+        const storedData = JSON.parse(localStorage.getItem('selectedRows'));
+        if (storedData) {
+          const filteredData = storedData.filter(item => !id.includes(item.id));
+          localStorage.setItem(localStorageKey, JSON.stringify(filteredData));
+        }
+
+      }catch(error) {
+        console.error('Error deleting applicant:', error);
+      }
     }
+   
 
    
   };
 
+  
+
   const handleRowClick = (params, event) => {
     const isDeleteButton = event.target.tagName === 'BUTTON' && event.target.getAttribute('data-operation') === 'delete';
     
-    // If it's the delete button, prevent navigation
+   
     if (isDeleteButton) {
       return;
     }
   
-    // Handle row selection and set the selected applicant
+  
     const applicantId = params.row.id;
     navigate(`/contact/${applicantId}`);
   };
+
+  const handleList = (id) => {
+
+    const offeredRowsData = storedselectedCandidate.find((row) => row.id === id);
+
+    const storedData = JSON.parse(localStorage.getItem('offeredRows')) || [];
+
+    storedData.push(offeredRowsData);
+    localStorage.setItem('offeredRows', JSON.stringify(storedData));
+
+  }
 
 
   const columns = [
@@ -72,6 +95,42 @@ const Candidate = () => {
     },
     {
       field: "phone", headerName: "Phone", flex: 1,
+    },
+    {
+      field: "shortlist",
+      headerName: "ShortList",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <Box display="flex" justifyContent="center" gap="3px" onClick={(event) => {
+            event.stopPropagation()
+          }}>
+
+            <button
+
+              onClick={() => handleList(params.id)}
+
+
+
+              style={{
+                background: 'green',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <ChecklistOutlinedIcon style={{ marginRight: '8px' }} />
+            </button>
+
+
+          </Box>
+
+        );
+      },
     },
     {
       field: "operation",
@@ -106,7 +165,7 @@ const Candidate = () => {
 
 
   return (
-    <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
+    <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)',paddingRight: "10px" }} >
       <Box>
         <Header title='Candidate' subtitle="Selected candidate list in Amnil" />
       </Box>
@@ -145,7 +204,7 @@ const Candidate = () => {
       >
         <DataGrid
           checkboxSelection
-          rows={selectedapplicants}
+          rows={storedselectedCandidate}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
           onRowClick={handleRowClick}

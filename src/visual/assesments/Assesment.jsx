@@ -55,18 +55,20 @@ const Assesment = () => {
     //     console.log(editingAssessment); // Log updated editingAssessment here
     // }, [editingAssessment]);
 
-    const handleDelete = async(id)=>{
+    
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this applicant..?");
+    if (confirmed) {
         try{
             await deleteAssessment(id);
             const updatedAssessments = assessments.filter(assessment => assessment.id !== id);
             dispatch(setAssessments(updatedAssessments));
-        }
-        catch(error){
+        } catch (error) {
             console.error('Error deleting assessment:', error);
-
         }
-
     }
+};
+    
 
     const columns = [
         { field: 'cid', headerName: 'CandidateID' },
@@ -131,7 +133,7 @@ const Assesment = () => {
     }
 
     return (
-        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 11.5vh)' }} >
+        <Box sx={{ background: `${colors.primary[400]} !important`, height: 'calc(100vh - 10vh)' }} >
 
             <Header title="Assessments" subtitle=" Applicant Assessments Section " />
 
